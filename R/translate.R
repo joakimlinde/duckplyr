@@ -179,7 +179,7 @@ rel_translate_lang <- function(
   }
 
 
-  if (!(name %in% c("wday", "strftime", "lag", "lead", "sum", "min", "max", "any", "all", "mean", "median", "sd"))) {
+  if (!(name %in% c("wday", "strftime", "lag", "lead", "sum", "min", "max", "any", "all", "mean", "median", "sd", "n_distinct"))) {
     if (!is.null(names(expr)) && any(names(expr) != "")) {
       # Fix grepl() and sum()/min()/max() logic below when allowing matching by argument name
       cli::cli_abort("Can't translate named argument {.code {name}({names(expr)[names(expr) != ''][[1]]} = )}.", call = call)
@@ -296,6 +296,7 @@ rel_translate_lang <- function(
 
     # Aggregates
     "sum", "min", "max", "any", "all", "mean", "sd", "median",
+    "n_distinct",
     #
     NULL
   )
@@ -334,7 +335,7 @@ rel_translate_lang <- function(
 
   # Other primitives: prod, range
   # Other aggregates: var(), cum*(), quantile()
-  if (name %in% c("sum", "min", "max", "any", "all", "mean", "sd", "median")) {
+  if (name %in% c("sum", "min", "max", "any", "all", "mean", "sd", "median", "n_distinct")) {
     is_primitive <- (name %in% c("sum", "min", "max", "any", "all"))
 
     if (is_primitive) {
@@ -377,7 +378,11 @@ rel_translate_lang <- function(
       if (identical(na_rm, FALSE)) {
         aliased_name <- paste0("___", name, "_na") # ___sum_na, ___min_na, ___max_na
       } else if (!identical(na_rm, TRUE)) {
-        cli::cli_abort("Invalid value for {.arg na.rm} in call to {.fun {name}}", call = call)
+        if (name == "n_distinct") {
+            aliased_name <- paste0("___", name, "_na_rm")         
+          } else {
+            cli::cli_abort("Invalid value for {.arg na.rm} in call to {.fun {name}}", call = call)
+          }
       }
     }
 
