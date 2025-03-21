@@ -379,7 +379,7 @@ rel_translate_lang <- function(
         aliased_name <- paste0("___", name, "_na") # ___sum_na, ___min_na, ___max_na
       } else if (identical(na_rm, TRUE)) {
         if (name == "n_distinct") {
-          aliased_name <- paste0("___", name, "_na_rm")         
+          aliased_name <- paste0("___", name)         
         }
       } else {
         cli::cli_abort("Invalid value for {.arg na.rm} in call to {.fun {name}}", call = call)

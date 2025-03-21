@@ -70,7 +70,7 @@ duckplyr_macros <- c(
   #
   # In n_distinct(), NA counts as 1 if not filtered out with rm.na
   "___n_distinct_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN (COUNT(DISTINCT x)+1) ELSE COUNT(DISTINCT x) END)",
-  "___n_distinct_na_rm" = "(x) AS (COUNT(DISTINCT x))",
+  "___n_distinct" = "(x) AS (COUNT(DISTINCT x))",
   #
   NULL
 )
