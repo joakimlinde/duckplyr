@@ -296,7 +296,6 @@ rel_translate_lang <- function(
 
     # Aggregates
     "sum", "min", "max", "any", "all", "mean", "sd", "median",
-    "n_distinct",
     #
     NULL
   )
