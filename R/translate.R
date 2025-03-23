@@ -296,6 +296,7 @@ rel_translate_lang <- function(
 
     # Aggregates
     "sum", "min", "max", "any", "all", "mean", "sd", "median",
+    "n_distinct",
     #
     NULL
   )
@@ -365,13 +366,17 @@ rel_translate_lang <- function(
     }
 
     if (window) {
-      if (identical(na_rm, FALSE)) {
-        cli::cli_abort(call = call, c(
-          "{.code {name}(na.rm = FALSE)} not supported in window functions",
-          i = "Use {.code {name}(na.rm = TRUE)} after checking for missing values"
-        ))
-      } else if (!identical(na_rm, TRUE)) {
-        cli::cli_abort("Invalid value for {.arg na.rm} in call to {.fun {name}}", call = call)
+      if (name == "n_distinct") {
+        cli::cli_abort("{.code {name}()} not supported in window functions", call = call)
+      } else {
+        if (identical(na_rm, FALSE)) {
+          cli::cli_abort(call = call, c(
+            "{.code {name}(na.rm = FALSE)} not supported in window functions",
+            i = "Use {.code {name}(na.rm = TRUE)} after checking for missing values"
+          ))
+        } else if (!identical(na_rm, TRUE)) {
+          cli::cli_abort("Invalid value for {.arg na.rm} in call to {.fun {name}}", call = call)
+        }
       }
     } else {
       if (identical(na_rm, FALSE)) {
