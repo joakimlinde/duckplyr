@@ -109,28 +109,28 @@ test_that("duckdb n_distinct() counts NA correctly", {
 
 
 test_that("duckdb n_distinct() error with more than one argument", {
-  expect_snapshot({
-    withr::local_envvar(DUCKPLYR_FORCE = TRUE)
+  withr::local_envvar(DUCKPLYR_FORCE = TRUE)
 
-    df <- duckdb_tibble(
-      a = c(1, 1, 2, 2, 2), 
-      b = c(3, 3, NA, 3, 3)
-    )
+  df <- duckdb_tibble(
+    a = c(1, 1, 2, 2, 2), 
+    b = c(3, 3, NA, 3, 3)
+  )
   
-    expect_error(df |> summarise( dummy = n_distinct(a, b) ))
+  expect_snapshot( error = TRUE, {
+    df |> summarise( dummy = n_distinct(a, b) )
   })
 })
 
 
 test_that("duckdb n_distinct() error with mutate", {
-  expect_snapshot({
-    withr::local_envvar(DUCKPLYR_FORCE = TRUE)
+  withr::local_envvar(DUCKPLYR_FORCE = TRUE)
 
-    df <- duckdb_tibble(
-      a = c(1, 1, 2, 2, 2), 
-      b = c(3, 3, NA, 3, 3)
-    )
+  df <- duckdb_tibble(
+    a = c(1, 1, 2, 2, 2), 
+    b = c(3, 3, NA, 3, 3)
+  )
   
-    expect_error(df |> mutate( dummy = n_distinct(a) ))
+  expect_snapshot( error = TRUE, {
+    df |> mutate( dummy = n_distinct(a) )
   })
 })
