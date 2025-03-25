@@ -887,11 +887,13 @@ test_that("duckplyr_mutate() give meaningful errors", {
       eval_tidy(res$z[[1]])
     ))
 
-
     # Error that contains {
     (expect_error(
       tibble() %>% duckplyr_mutate(stop("{"))
     ))
+
+    # n_distinct
+    (expect_error(tbl %>% duckplyr_mutate(a = n_distinct(y))))
   })
 })
 
