@@ -122,6 +122,19 @@ test_that("duckdb n_distinct() error with more than one argument", {
 })
 
 
+test_that("duckdb n_distinct() error with na.rm not being TRUE/FALSE", {
+  withr::local_envvar(DUCKPLYR_FORCE = TRUE)
+
+  df <- duckdb_tibble(
+    a = c(1, 2), 
+  )
+  
+  expect_snapshot( error = TRUE, {
+    df |> summarise( dummy = n_distinct(a, na.rm = "b") )
+  })
+})
+
+
 test_that("duckdb n_distinct() error with mutate", {
   withr::local_envvar(DUCKPLYR_FORCE = TRUE)
 
