@@ -6,7 +6,8 @@ test_that("duckdb n_distinct() basic", {
     b = c(3, 3, NA, 3, 3)
   )
 
-  out <- df |>
+  out <- 
+    df |>
     summarise( n_distinct_a = n_distinct(a),
                n_distinct_a_na_rm = n_distinct(a, na.rm = TRUE),
                n_distinct_b = n_distinct(b, na.rm = FALSE),
@@ -30,7 +31,8 @@ test_that("duckdb n_distinct() counts empty inputs", {
     d = character()
   )
 
-  out <- df |>
+  out <- 
+    df |>
     summarise( n_distinct_a = n_distinct(a),
                n_distinct_b = n_distinct(b),
                n_distinct_c = n_distinct(c),
@@ -54,7 +56,8 @@ test_that("duckdb n_distinct() counts unique values in simple vectors", {
     d = c("x", "y", NA)
   )
 
-  out <- df |>
+  out <- 
+    df |>
     summarise( n_distinct_a = n_distinct(a),
                n_distinct_b = n_distinct(b),
                n_distinct_c = n_distinct(c),
@@ -76,7 +79,8 @@ test_that("duckdb n_distinct() can drop missing values", {
     b = c(NA, 0), 
   )
 
-  out <- df |>
+  out <- 
+    df |>
     summarise( n_distinct_a = n_distinct(a, na.rm = TRUE),
                n_distinct_b = n_distinct(b, na.rm = TRUE),
     )
@@ -94,7 +98,8 @@ test_that("duckdb n_distinct() counts NA correctly", {
     b = c(3, 3, NA, 3, NA, 4, 5)
   )
 
-  out <- df |>
+  out <- 
+    df |>
     summarise( n_distinct_a = n_distinct(a),
                n_distinct_a_na_rm = n_distinct(a, na.rm = TRUE),
                n_distinct_b = n_distinct(b, na.rm = FALSE),
